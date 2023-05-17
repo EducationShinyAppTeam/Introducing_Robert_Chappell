@@ -15,7 +15,7 @@ ui <- list(
     skin = "blue",
     ### Create the app header ----
     dashboardHeader(
-      title = "App Template", # You may use a shortened form of the title here
+      title = "Meet Robert Chappell", # You may use a shortened form of the title here
       titleWidth = 250,
       tags$li(class = "dropdown", actionLink("info", icon("info"))),
       tags$li(
@@ -35,12 +35,8 @@ ui <- list(
       sidebarMenu(
         id = "pages",
         menuItem("Overview", tabName = "overview", icon = icon("gauge-high")),
-        menuItem("Prerequisites", tabName = "prerequisites", icon = icon("book")),
-        menuItem("Example", tabName = "example", icon = icon("book-open-reader")),
-        menuItem("Explore", tabName = "explore", icon = icon("wpexplorer")),
-        menuItem("Challenge", tabName = "challenge", icon = icon("gears")),
-        menuItem("Game", tabName = "game", icon = icon("gamepad")),
-        menuItem("Wizard", tabName = "wizard", icon = icon("hat-wizard")),
+        menuItem("About Me", tabName = "prerequisites", icon = icon("book")),
+        menuItem("Contact Me", tabName = "explore", icon = icon("book-open-reader")),
         menuItem("References", tabName = "references", icon = icon("leanpub"))
       ),
       tags$div(
@@ -55,19 +51,18 @@ ui <- list(
         tabItem(
           tabName = "overview",
           withMathJax(),
-          h1("Sample Application for BOAST Apps"), # This should be the full name.
-          p("This is a sample Shiny application for BOAST. Remember, this page
-            will act like the front page (home page) of your app. Thus you will
-            want to have this page catch attention and describe (in general terms)
-            what the user can do in the rest of the app."),
-          h2("Instructions"),
-          p("This information will change depending on what you want to do."),
-          tags$ol(
-            tags$li("Review any prerequiste ideas using the Prerequistes tab."),
-            tags$li("Explore the Exploration Tab."),
-            tags$li("Challenge yourself."),
-            tags$li("Play the game to test how far you've come.")
+          h1("Introducing Robert Chappell"), # This should be the full name.
+          p("This is a sample Shiny application for BOAST. This app will tell you
+            all about an author for the BOAST program, Robert Chappell."),
+          tags$figure(
+            align = "center",
+            tags$img(
+              src = "prof-head.JPG",
+              width = 200,
+              alt = "Picture of an astragalus (bone die)"
+            )
           ),
+          br(),
           ##### Go Button--location will depend on your goals
           div(
             style = "text-align: center;",
@@ -84,11 +79,7 @@ ui <- list(
           br(),
           h2("Acknowledgements"),
           p(
-            "This version of the app was developed and coded by Neil J.
-            Hatfield  and Robert P. Carey, III.",
-            br(),
-            "We would like to extend a special thanks to the Shiny Program
-            Students.",
+            "References will be found on the reference page.",
             br(),
             br(),
             "Cite this app as:",
@@ -103,20 +94,16 @@ ui <- list(
         tabItem(
           tabName = "prerequisites",
           withMathJax(),
-          h2("Prerequisites"),
-          p("In order to get the most out of this app, please review the
-            following:"),
+          h2("About Me"),
+          p("Here are some interesting things about myself:"),
           tags$ul(
-            tags$li("Pre-req 1--Technical/Conceptual Prerequisites are ideas that
-                    users need to have in order to engage with your app fully."),
-            tags$li("Pre-req 2--Contextual Prerequisites refer to any information
-                    about a context in your app that will enrich a user's
-                    understandings."),
-            tags$li("Pre-req 3"),
-            tags$li("Pre-req 4")
+            tags$li("I just finished my first year at Penn State. I am a Data Science
+                    Major"),
+            tags$li("I play both ice hockey and curling. I play curling for Penn State"),
+            tags$li("At home I have a younger brother and my cat Prince"),
+            tags$li("Some of my hobbies include cycling, golfing, and running")
           ),
-          p("Notice the use of an unordered list; users can move through the
-            list any way they wish."),
+          p('I am very excited to be apart of this program and excited to work with everybody'),
           box(
             title = strong("Null Hypothesis Significance Tests (NHSTs)"),
             status = "primary",
@@ -158,45 +145,9 @@ ui <- list(
         tabItem(
           tabName = "explore",
           withMathJax(),
-          h2("Explore the Concept"),
-          p("This page should include something for the user to do, the more
-            active and engaging, the better. The purpose of this page is to help
-            the user build a productive understanding of the concept your app
-            is dedicated to."),
-          p("Common elements include graphs, sliders, buttons, etc."),
-          p("The following comes from the NHST Caveats App:"),
-        ),
-        #### Set up a Challenge Page ----
-        tabItem(
-          tabName = "challenge",
-          withMathJax(),
-          h2("Challenge Yourself"),
-          p("The general intent of a Challenge page is to have the user take
-            what they learned in an Exploration and apply that knowledge in new
-            contexts/situations. In essence, to have them challenge their
-            understanding by testing themselves."),
-          p("What this page looks like will be up to you. Something you might
-            consider is to re-create the tools of the Exploration page and then
-            a list of questions for the user to then answer.")
-        ),
-        #### Set up a Game Page ----
-        tabItem(
-          tabName = "game",
-          withMathJax(),
-          h2("Practice/Test Yourself with [Type of Game]"),
-          p("On this type of page, you'll set up a game for the user to play.
-            Game types include Tic-Tac-Toe, Matching, and a version Hangman to
-            name a few. If you have ideas for new game type, please let us know.")
-        ),
-        #### Set up a Wizard Page ----
-        tabItem(
-          tabName = "wizard",
-          withMathJax(),
-          h2("Wizard"),
-          p("This page will have a series of inputs and questions for the user to
-            answer/work through in order to have the app create something. These
-            types of Activity pages are currently rare as we try to avoid
-            creating 'calculators' in the BOAST project.")
+          h2("Contact Me"),
+          p("Need to research a way to store input from the user, so I would be
+            able to see them when they sumbit.")
         ),
         #### Set up the References Page ----
         tabItem(
@@ -223,7 +174,7 @@ ui <- list(
 
 # Define server logic ----
 server <- function(input, output, session) {
-
+  
   ## Set up Info button ----
   observeEvent(
     eventExpr = input$info,
@@ -232,12 +183,12 @@ server <- function(input, output, session) {
         session = session,
         type = "info",
         title = "Information",
-        text = "This App Template will help you get started building your own app"
+        text = "This app will tell you all about Robert Chappell"
       )
     }
   )
-
-
+  
+  
 }
 
 # Boast App Call ----
