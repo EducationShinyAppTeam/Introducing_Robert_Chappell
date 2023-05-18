@@ -4,6 +4,17 @@ library(shinydashboard)
 library(shinyBS)
 library(shinyWidgets)
 library(boastUtils)
+library(tidyverse)
+
+intrestData <- data.frame(Activity = c("Golf", "Bike", "Hockey", "Running", "Hockey", "Hockey", "Hockey", "Golf", "Golf", "Bike"))
+
+activity_counts <- table(intrestData$Activity)
+
+intrestsPlot <- ggplot(data = intrestData, aes(x = "", fill = Activity)) +
+  geom_bar(width = 1, stat = "identity") +
+  coord_polar("y", start = 0) +
+  labs(title = "My Intrests", fill = "Activity") +
+  theme_void()
 
 # Load additional dependencies and setup functions
 # source("global.R")
@@ -20,7 +31,7 @@ ui <- list(
       tags$li(class = "dropdown", actionLink("info", icon("info"))),
       tags$li(
         class = "dropdown",
-        boastUtils::surveyLink(name = "App_Template")
+        boastUtils::surveyLink(name = "Introducing_Robert_Chappell")
       ),
       tags$li(
         class = "dropdown",
@@ -67,8 +78,8 @@ ui <- list(
           div(
             style = "text-align: center;",
             bsButton(
-              inputId = "go1",
-              label = "GO!",
+              inputId = "goToAboutMe",
+              label = "About Me",
               size = "large",
               icon = icon("bolt"),
               style = "default"
@@ -100,28 +111,29 @@ ui <- list(
             tags$li("I just finished my first year at Penn State. I am a Data Science
                     Major"),
             tags$li("I play both ice hockey and curling. I play curling for Penn State"),
-            tags$li("At home I have a younger brother and my cat Prince"),
+            tags$li("At home I have a younger brother and my cats Prince and Sable"),
             tags$li("Some of my hobbies include cycling, golfing, and running")
           ),
           p('I am very excited to be apart of this program and excited to work
-            with everybody'),
+            with everybody!'),
           fluidRow(
             column(
-              width = 4,
+              width = 6,
               offset = 0,
               tags$figure(
                 align = "center",
                 tags$img(
                   src = "cats-pic.jpg",
-                  width = 200,
+                  height = 200,
+                  width = 250,
                   alt = "Picture of me with cats"
                 ),
                 tags$figcaption("A photo with my cats Prince and Sable")
               )
             ),
             column(
-              width = 4,
-              offset = 7,
+              width = 6,
+              offset = 0,
               tags$figure(
                 align = "center",
                 tags$img(
@@ -134,6 +146,10 @@ ui <- list(
               )
             )
           ),
+          plotOutput(
+            outputId = "intrestsPieChart",
+            width = "100%"
+          )
         ),
         #### Note: you must have at least one of the following pages. You might
         #### have more than one type and/or more than one of the same type. This
@@ -143,12 +159,20 @@ ui <- list(
           tabName = "explore",
           withMathJax(),
           h2("Contact Me"),
+          p("My email is rwc5541@psu.edu if you need to contact me. Or you can
+            write a message in the box below."),
           textInput(
             inputId = 'text1',
-            label = 'Enter Message Here',
+            label = 'Message Robert Chappell Here:',
             value = "",
             width = '100%',
             placeholder = 'Type the message here'
+          ),
+          bsButton(
+            inputId = "sendText",
+            label = "Send",
+            size = 'large',
+            style = 'default'
           ),
           #### verbatimTextOutput()
           p("Need to research a way to store input from the user, so I would be
@@ -159,12 +183,12 @@ ui <- list(
           tabName = "references",
           withMathJax(),
           h2("References"),
-          p("I used the style guide along with these references:"),
+          p("I used the style guide along with these references"),
           p(
             class = "hangingindent",
-            "shiny: Create a text input control.
-            (v1.7.4). [R package]. Available from
-            https://shiny.posit.co/r/reference/shiny/1.7.4/textinput"
+            "Chang W, Cheng J, Allaire J, Sievert C, Schloerke B, Xie Y, Allen J, McPherson J,
+            Dipert A, Borges B (2022). _shiny: Web Application Framework for R_. R package version
+            1.7.4, <https://CRAN.R-project.org/package=shiny>."
           ),
           br(),
           br(),
@@ -191,8 +215,32 @@ server <- function(input, output, session) {
       )
     }
   )
-  
-  
+  ## Set up about me button ----
+  observeEvent(
+    eventExpr = input$goToAboutMe,
+    handlerExpr = {
+      updateTabItems(
+        session = session,
+        inputId = 'pages',
+        selected = "prerequisites"
+      )
+    }
+  )
+  output$intrestsPieChart <- renderPlot(
+    expr = {
+      ggplot(data = intrestData, aes(x = "", fill = Activity)) +
+        geom_bar(width = 1, stat = "identity") +
+        coord_polar("y", start = 0) +
+        labs(title = "My Intrests", fill = "Activity") +
+        theme_void()
+    },
+    width = "auto",
+    height = "auto",
+    res = 72,
+    alt = "A pie chart with percentages of intrests, reflecting Roberts ranking of
+    the intrests, 40% hockey, 30% golf, 20% biking, 10% running",
+    outputArgs = 
+  )
 }
 
 # Boast App Call ----
