@@ -59,7 +59,7 @@ ui <- list(
             tags$img(
               src = "prof-head.JPG",
               width = 200,
-              alt = "Picture of an astragalus (bone die)"
+              alt = "Picture of Robert Chappell"
             )
           ),
           br(),
@@ -103,40 +103,37 @@ ui <- list(
             tags$li("At home I have a younger brother and my cat Prince"),
             tags$li("Some of my hobbies include cycling, golfing, and running")
           ),
-          p('I am very excited to be apart of this program and excited to work with everybody'),
-          box(
-            title = strong("Null Hypothesis Significance Tests (NHSTs)"),
-            status = "primary",
-            collapsible = TRUE,
-            collapsed = TRUE,
-            width = '100%',
-            "In the Confirmatory Data Analysis tradition, null hypothesis
-            significance tests serve as a critical tool to confirm that a
-            particular theoretical model describes our data and to make a
-            generalization from our sample to the broader population
-            (i.e., make an inference). The null hypothesis often reflects the
-            simpler of two models (e.g., 'no statistical difference',
-            'there is an additive difference of 1', etc.) that we will use to
-            build a sampling distribution for our chosen estimator. These
-            methods let us test whether our sample data are consistent with this
-            simple model (null hypothesis)."
+          p('I am very excited to be apart of this program and excited to work
+            with everybody'),
+          fluidRow(
+            column(
+              width = 4,
+              offset = 0,
+              tags$figure(
+                align = "center",
+                tags$img(
+                  src = "cats-pic.jpg",
+                  width = 200,
+                  alt = "Picture of me with cats"
+                ),
+                tags$figcaption("A photo with my cats Prince and Sable")
+              )
+            ),
+            column(
+              width = 4,
+              offset = 7,
+              tags$figure(
+                align = "center",
+                tags$img(
+                  src = "hockey-pic.JPG",
+                  width = 200,
+                  alt = "Picture of me celebrating my goal with teammate"
+                ),
+                tags$figcaption("A photo of me (right) celebrating my goal with a
+                                teammate")
+              )
+            )
           ),
-          box(
-            title = strong(tags$em("p"), "-values"),
-            status = "primary",
-            collapsible = TRUE,
-            collapsed = FALSE,
-            width = '100%',
-            "The probability that our selected estimator takes on a value at
-            least as extreme as what we observed given our null hypothesis. If
-            we were to carry out our study infinitely many times and the null
-            hypothesis accurately modeled what we're studying, then we would
-            expect for our estimator to produce a value at least as extreme as
-            what we have seen 100*(p-value)% of the time. The larger the
-            p-value, the more often we would expect our estimator to take on a
-            value at least as extreme as what we've seen; the smaller, the less
-            often."
-          )
         ),
         #### Note: you must have at least one of the following pages. You might
         #### have more than one type and/or more than one of the same type. This
@@ -146,6 +143,14 @@ ui <- list(
           tabName = "explore",
           withMathJax(),
           h2("Contact Me"),
+          textInput(
+            inputId = 'text1',
+            label = 'Enter Message Here',
+            value = "",
+            width = '100%',
+            placeholder = 'Type the message here'
+          ),
+          #### verbatimTextOutput()
           p("Need to research a way to store input from the user, so I would be
             able to see them when they sumbit.")
         ),
@@ -154,13 +159,12 @@ ui <- list(
           tabName = "references",
           withMathJax(),
           h2("References"),
-          p("You'll need to fill in this page with all of the appropriate
-            references for your app."),
+          p("I used the style guide along with these references:"),
           p(
             class = "hangingindent",
-            "Bailey, E. (2015). shinyBS: Twitter bootstrap components for shiny.
-            (v0.61). [R package]. Available from
-            https://CRAN.R-project.org/package=shinyBS"
+            "shiny: Create a text input control.
+            (v1.7.4). [R package]. Available from
+            https://shiny.posit.co/r/reference/shiny/1.7.4/textinput"
           ),
           br(),
           br(),
