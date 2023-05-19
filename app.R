@@ -6,15 +6,8 @@ library(shinyWidgets)
 library(boastUtils)
 library(tidyverse)
 
-intrestData <- data.frame(Activity = c("Golf", "Bike", "Hockey", "Running", "Hockey", "Hockey", "Hockey", "Golf", "Golf", "Bike"))
 
-activity_counts <- table(intrestData$Activity)
 
-intrestsPlot <- ggplot(data = intrestData, aes(x = "", fill = Activity)) +
-  geom_bar(width = 1, stat = "identity") +
-  coord_polar("y", start = 0) +
-  labs(title = "My Intrests", fill = "Activity") +
-  theme_void()
 
 # Load additional dependencies and setup functions
 # source("global.R")
@@ -114,8 +107,11 @@ ui <- list(
             tags$li("At home I have a younger brother and my cats Prince and Sable"),
             tags$li("Some of my hobbies include cycling, golfing, and running")
           ),
-          p('I am very excited to be apart of this program and excited to work
-            with everybody!'),
+          p('Some more about me is that I am a travel manager for the Penn State
+            curling club, and also a member of the sports analytics club. I played
+            hockey since I was 10, and have two cats at home. I enjoy all types of music except
+            for country music, and love to hang out with my friends. I am very excited to
+            work in this program!'),
           fluidRow(
             column(
               width = 6,
@@ -147,8 +143,7 @@ ui <- list(
             )
           ),
           plotOutput(
-            outputId = "intrestsPieChart",
-            width = "100%"
+            outputId = "intrestsPieChart"
           )
         ),
         #### Note: you must have at least one of the following pages. You might
@@ -226,12 +221,23 @@ server <- function(input, output, session) {
       )
     }
   )
+  
+  ## Set up data viz ----
+  
   output$intrestsPieChart <- renderPlot(
     expr = {
+      intrestData <- data.frame(Activity = c("Golf", "Bike", "Hockey", "Running",
+                                             "Hockey", "Hockey", "Hockey", "Golf",
+                                             "Golf", "Bike"))
+      
+      activity_counts <- table(intrestData$Activity)
+      
+      activity_percentages <- prop.table(activity_counts) * 100
+      
       ggplot(data = intrestData, aes(x = "", fill = Activity)) +
-        geom_bar(width = 1, stat = "identity") +
+        geom_bar(width = 1, stat = "count") +
         coord_polar("y", start = 0) +
-        labs(title = "My Intrests", fill = "Activity") +
+        labs(title = "My Intrests!", fill = "Activity") +
         theme_void()
     },
     width = "auto",
