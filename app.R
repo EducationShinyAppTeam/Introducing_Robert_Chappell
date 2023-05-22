@@ -39,8 +39,8 @@ ui <- list(
       sidebarMenu(
         id = "pages",
         menuItem("Overview", tabName = "overview", icon = icon("gauge-high")),
-        menuItem("About Me", tabName = "prerequisites", icon = icon("book")),
-        menuItem("Contact Me", tabName = "explore", icon = icon("book-open-reader")),
+        menuItem("About Me", tabName = "aboutMe", icon = icon("book")),
+        menuItem("Quiz", tabName = "explore", icon = icon("gamepad")),
         menuItem("References", tabName = "references", icon = icon("leanpub"))
       ),
       tags$div(
@@ -58,6 +58,14 @@ ui <- list(
           h1("Introducing Robert Chappell"), # This should be the full name.
           p("This is a sample Shiny application for BOAST. This app will tell you
             all about an author for the BOAST program, Robert Chappell."),
+          p("My email is rwc5541@psu.edu if you need to contact me."),
+          h2("Instructions"),
+          p("The following pages are for you to feel free to explore!"),
+          tags$ol(
+            tags$li("Review facts about me using the About Me Tab."),
+            tags$li("Challenge yourself by doing a quick quiz about me.")
+          ),
+          br(),
           tags$figure(
             align = "center",
             tags$img(
@@ -91,12 +99,12 @@ ui <- list(
             citeApp(),
             br(),
             br(),
-            div(class = "updated", "Last Update: 11/8/2022 by NJH.")
+            div(class = "updated", "Last Update: 05/19/2023 by RWC.")
           )
         ),
-        #### Set up the Prerequisites Page ----
+        #### Set up the aboutMe Page ----
         tabItem(
-          tabName = "prerequisites",
+          tabName = "aboutMe",
           withMathJax(),
           h2("About Me"),
           p("Here are some interesting things about myself:"),
@@ -107,7 +115,7 @@ ui <- list(
             tags$li("At home I have a younger brother and my cats Prince and Sable"),
             tags$li("Some of my hobbies include cycling, golfing, and running")
           ),
-          p('Some more about me is that I am a travel manager for the Penn State
+          p('Some more about me is that I am from Pittsburgh, I am a travel manager for the Penn State
             curling club, and also a member of the sports analytics club. I played
             hockey since I was 10, and have two cats at home. I enjoy all types of music except
             for country music, and love to hang out with my friends. I am very excited to
@@ -144,48 +152,172 @@ ui <- list(
           ),
           plotOutput(
             outputId = "intrestsPieChart"
-          )
+          ),
         ),
         #### Note: you must have at least one of the following pages. You might
         #### have more than one type and/or more than one of the same type. This
         #### will be up to you and the goals for your app.
-        #### Set up an Explore Page ----
+        #### Set up an Quiz Page ----
         tabItem(
           tabName = "explore",
           withMathJax(),
-          h2("Contact Me"),
-          p("My email is rwc5541@psu.edu if you need to contact me. Or you can
-            write a message in the box below."),
-          textInput(
-            inputId = 'text1',
-            label = 'Message Robert Chappell Here:',
-            value = "",
-            width = '100%',
-            placeholder = 'Type the message here'
+          h2("Quiz about me!"),
+          p("Answer the three questions about my life, if you need to review, check out
+            the About Me page."),
+          br(),
+          fluidRow(
+            column(
+              width = 12,
+              offset = 0,
+              wellPanel(
+                tabsetPanel(
+                  id = "quiz",
+                  type = "hidden",
+                  tabPanel(
+                    title = "First Question",
+                    value = paste0("Q1"),
+                    tags$figure(
+                      align = "center",
+                      tags$img(
+                        src = "pitts.jpg",
+                        width = 300,
+                        alt = "View of Pittsburgh"
+                      )
+                    ),
+                    br(),
+                    h3("Question 1"),
+                    radioButtons(
+                      inputId = "answerChoice1",
+                      label = "Where is Robert from?",
+                      br(),
+                      choices = c("Pittsburgh","Toronto","Chicago")
+                    )
+                  ),
+                  tabPanel(
+                    title = "Second Question",
+                    value = "Q2",
+                    tags$figure(
+                      align = "center",
+                      tags$img(
+                        src = "curling.jpg",
+                        width = 200,
+                        alt = "View of Robert with his Curling team"
+                      )
+                    ),
+                    br(),
+                    h3("Question 2"),
+                    radioButtons(
+                      inputId = "answerChoice2",
+                      label = "What sport does Robert play at Penn State?",
+                      br(),
+                      choices = c("Curling","Basketball","Rugby")
+                    )
+                  ),
+                  tabPanel(
+                    title = "Third Question",
+                    value = "Q3",
+                    tags$figure(
+                      align = "center",
+                      tags$img(
+                        src = "cats.jpg",
+                        width = 200,
+                        alt = "Pic of Robert's cat laying together"
+                      )
+                    ),
+                    br(),
+                    h3("Question 3"),
+                    radioButtons(
+                      inputId = "answerChoice3",
+                      label = "What is the name of Robert's cats?",
+                      br(),
+                      choices = c("Prince and Sable","Fizz and Rocket","Garfield and Odie")
+                    )
+                  )
+                )
+              )
+            )
           ),
-          bsButton(
-            inputId = "sendText",
-            label = "Send",
-            size = 'large',
-            style = 'default'
-          ),
-          #### verbatimTextOutput()
-          p("Need to research a way to store input from the user, so I would be
-            able to see them when they sumbit.")
+          fluidRow(
+            column(
+              width = 4,
+              offset = 0,
+              div(
+                style = "text-align: center;",
+                bsButton(
+                  inputId = "prevPage",
+                  label = "Previous Question",
+                  size = "large",
+                  style = "default"
+                ),
+              )
+            ),
+            column(
+              width = 4,
+              offset = 0,
+              div(
+                style = "text-align: center;",
+                bsButton(
+                  inputId = "nextPage",
+                  label = "Next Question",
+                  size = "large",
+                  style = "default"
+                ),
+              )
+            ),
+            column(
+              width = 4,
+              offset = 0,
+              div(
+                style = "text-align: center;",
+                bsButton(
+                  inputId = "submitQuiz",
+                  label = "Submit Quiz",
+                  size = "large",
+                  style = "default"
+                )
+              )
+            )
+            
+                
+              ),
+          
         ),
+        
+        
         #### Set up the References Page ----
         tabItem(
           tabName = "references",
           withMathJax(),
           h2("References"),
-          p("I used the style guide along with these references"),
+          p(
+            class = 'hangingindent',
+            "Bailey E (2022). _shinyBS: Twitter Bootstrap Components for Shiny_. R package version
+            0.61.1, <https://CRAN.R-project.org/package=shinyBS>."),
+          p(
+            class = 'hangingindent',
+            "Carey R, Hatfield N (2023). _boastUtils: BOAST Utilities_. R package version 0.1.11.2,
+  <https://github.com/EducationShinyAppTeam/boastUtils>."
+          ),
+          p(class = 'hangingindent',
+            "Chang W, Borges Ribeiro B (2021). _shinydashboard: Create Dashboards with 'Shiny'_. R
+  package version 0.7.2, <https://CRAN.R-project.org/package=shinydashboard>."),
           p(
             class = "hangingindent",
             "Chang W, Cheng J, Allaire J, Sievert C, Schloerke B, Xie Y, Allen J, McPherson J,
             Dipert A, Borges B (2022). _shiny: Web Application Framework for R_. R package version
             1.7.4, <https://CRAN.R-project.org/package=shiny>."
           ),
-          br(),
+          p(
+            class = 'hangingindent',
+              "H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York,
+              2016."
+          ),
+          p(
+            class = "hangingindent",
+            "Perrier V, Meyer F, Granjon D (2023). _shinyWidgets: Custom Inputs Widgets for Shiny_.
+  R package version 0.7.6, <https://CRAN.R-project.org/package=shinyWidgets>."
+          ),
+          
           br(),
           br(),
           boastUtils::copyrightInfo()
@@ -217,8 +349,73 @@ server <- function(input, output, session) {
       updateTabItems(
         session = session,
         inputId = 'pages',
-        selected = "prerequisites"
+        selected = "aboutMe"
       )
+    }
+  )
+  
+  ## Set up Quiz ----
+  
+  # Current Question Counter----
+  currentQuestion <- reactiveVal(1)
+  
+  ### Next Button ----
+  
+  observeEvent(
+    eventExpr = input$nextPage,
+    handlerExpr = {
+      if (currentQuestion() != 3) {
+        currentQuestion(currentQuestion()+1)
+        updateTabsetPanel(
+          session = session,
+          inputId = "quiz",
+          selected = paste0("Q",currentQuestion())
+        )
+      }
+    }
+  )
+  
+  ### Previous Button ----
+  
+  observeEvent(
+    eventExpr = input$prevPage,
+    handlerExpr = {
+      if (currentQuestion() != 1) {
+        currentQuestion(currentQuestion()-1)
+        updateTabsetPanel(
+          session = session,
+          inputId = "quiz",
+          selected = paste0("Q",currentQuestion())
+        )
+      }
+    }
+  )
+  
+  #Current Score for the Quiz----
+  currentScore <- reactiveVal(0)
+  
+  ### Submit Button ----
+  observeEvent(
+    eventExpr = input$submitQuiz,
+    handlerExpr = {
+      if (!is.null(input$answerChoice1) && input$answerChoice1 == "Pittsburgh") {
+        currentScore(currentScore() + 1)
+      }
+      if (!is.null(input$answerChoice2) && input$answerChoice2 == "Curling") {
+        currentScore(currentScore() + 1)
+      }
+      if (!is.null(input$answerChoice3) && input$answerChoice3 == "Prince and Sable") {
+        currentScore(currentScore() + 1)
+      }
+      
+      sendSweetAlert(
+        session = session,
+        type = "success",
+        title = "Quiz Complete!",
+        text = paste0("Your Score: ", currentScore(), "/3")
+      )
+      
+      currentScore(currentScore() - currentScore())
     }
   )
   
