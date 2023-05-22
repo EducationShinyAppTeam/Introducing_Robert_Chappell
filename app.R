@@ -4,7 +4,7 @@ library(shinydashboard)
 library(shinyBS)
 library(shinyWidgets)
 library(boastUtils)
-library(tidyverse)
+library(ggplot2)
 
 
 
@@ -102,7 +102,7 @@ ui <- list(
             div(class = "updated", "Last Update: 05/19/2023 by RWC.")
           )
         ),
-        #### Set up the aboutMe Page ----
+        #### Set up the About Me Page ----
         tabItem(
           tabName = "aboutMe",
           withMathJax(),
