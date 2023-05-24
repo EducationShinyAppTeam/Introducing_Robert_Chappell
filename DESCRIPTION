@@ -1,6 +1,6 @@
 Title: Introducing Robert Chappell
 ShortName: Meet Robert Chappell
-Date: 2021-05-17
+Date: 2023-05-17
 Lifecycle: experimental
 Authors@R: c(
     person(given = "Robert", family = "Chappell", email = "rwc5541@psu.edu", role = c("aut", "cre"))
@@ -9,7 +9,7 @@ Chapter: Introductions
 Description: This app shows people all about an author, Robert Chappell.
 LearningObjectives: c(
     "The student will learn about Robert Chappell.",
-    "The student will be able to send a message to Robert CHappell."
+    "The student will be able to send a message to Robert Chappell."
   )
 DisplayMode: Normal
 URL: https://psu-eberly.shinyapps.io/Introducing_Robert_Chappell

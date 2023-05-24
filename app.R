@@ -91,7 +91,7 @@ ui <- list(
           br(),
           h2("Acknowledgements"),
           p(
-            "References will be found on the reference page.",
+            "This version of the app was developed and coded by Robert Chappell.",
             br(),
             br(),
             "Cite this app as:",
@@ -118,8 +118,8 @@ ui <- list(
           p('Some more about me is that I am from Pittsburgh, I am a travel manager for the Penn State
             curling club, and also a member of the sports analytics club. I played
             hockey since I was 10, and have two cats at home. I enjoy all types of music except
-            for country music, and love to hang out with my friends. I am very excited to
-            work in this program!'),
+            for country music, and love to hang out with my friends. Below is a pie chart with my intrests.
+            I am very excited to work in this program!'),
           fluidRow(
             column(
               width = 6,
@@ -308,15 +308,16 @@ ui <- list(
             1.7.4, <https://CRAN.R-project.org/package=shiny>."
           ),
           p(
-            class = 'hangingindent',
-              "H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York,
-              2016."
+            class = "hangingindent",
+              "Perrier V, Meyer F, Granjon D (2023). _shinyWidgets: Custom Inputs Widgets for Shiny_.
+              R package version 0.7.6, <https://CRAN.R-project.org/package=shinyWidgets>."
           ),
           p(
-            class = "hangingindent",
-            "Perrier V, Meyer F, Granjon D (2023). _shinyWidgets: Custom Inputs Widgets for Shiny_.
-  R package version 0.7.6, <https://CRAN.R-project.org/package=shinyWidgets>."
+            class = 'hangingindent',
+              "Wickham H. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York,
+              2016."
           ),
+          
           
           br(),
           br(),
@@ -398,26 +399,49 @@ server <- function(input, output, session) {
   observeEvent(
     eventExpr = input$submitQuiz,
     handlerExpr = {
+      wrongAnswers <- character(0)  # Store the wrong answers
+      
       if (!is.null(input$answerChoice1) && input$answerChoice1 == "Pittsburgh") {
         currentScore(currentScore() + 1)
+      } else {
+        wrongAnswers <- c(wrongAnswers, "Question 1")
       }
+      
       if (!is.null(input$answerChoice2) && input$answerChoice2 == "Curling") {
         currentScore(currentScore() + 1)
+      } else {
+        wrongAnswers <- c(wrongAnswers, "Question 2")
       }
+      
       if (!is.null(input$answerChoice3) && input$answerChoice3 == "Prince and Sable") {
         currentScore(currentScore() + 1)
+      } else {
+        wrongAnswers <- c(wrongAnswers, "Question 3")
       }
       
       sendSweetAlert(
         session = session,
-        type = "success",
-        title = "Quiz Complete!",
-        text = paste0("Your Score: ", currentScore(), "/3")
+        type = if (currentScore() == 3) {
+          "success"
+        } else if (currentScore() < 3) {
+          "warning"
+        },
+        title = "Quiz Completed",
+        text = paste0(
+          "Your Score: ", currentScore(), "/3",'\n\n',
+          if (length(wrongAnswers) > 0) {
+            paste("You got the following question(s) wrong:\n", paste(wrongAnswers, collapse = ", "))
+          } else {
+            "Congratulations! You answered all questions correctly."
+          }
+        )
       )
       
-      currentScore(currentScore() - currentScore())
+      currentScore(0)  # Reset the score
     }
   )
+  
+  
   
   ## Set up data viz ----
   
@@ -434,8 +458,11 @@ server <- function(input, output, session) {
       ggplot(data = intrestData, aes(x = "", fill = Activity)) +
         geom_bar(width = 1, stat = "count") +
         coord_polar("y", start = 0) +
-        labs(title = "My Intrests!", fill = "Activity") +
-        theme_void()
+        labs(fill = "Activity") +
+        theme_void() +
+        scale_fill_manual( # If you use "fill" in aes
+          values = boastUtils::boastPalette
+        )  
     },
     width = "auto",
     height = "auto",
