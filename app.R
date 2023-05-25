@@ -118,7 +118,7 @@ ui <- list(
           p('Some more about me is that I am from Pittsburgh, I am a travel manager for the Penn State
             curling club, and also a member of the sports analytics club. I played
             hockey since I was 10, and have two cats at home. I enjoy all types of music except
-            for country music, and love to hang out with my friends. Below is a pie chart with my intrests.
+            for country music, and love to hang out with my friends. Below is a pie chart with my interests.
             I am very excited to work in this program!'),
           fluidRow(
             column(
@@ -428,7 +428,7 @@ server <- function(input, output, session) {
         },
         title = "Quiz Completed",
         text = paste0(
-          "Your Score: ", currentScore(), "/3",'\n\n',
+          "Your Score: ", currentScore(), "/3",'\n',
           if (length(wrongAnswers) > 0) {
             paste("You got the following question(s) wrong:\n", paste(wrongAnswers, collapse = ", "))
           } else {
@@ -467,8 +467,8 @@ server <- function(input, output, session) {
     width = "auto",
     height = "auto",
     res = 72,
-    alt = "A pie chart with percentages of intrests, reflecting Roberts ranking of
-    the intrests, 40% hockey, 30% golf, 20% biking, 10% running",
+    alt = "A pie chart with percentages of interests, reflecting Roberts ranking of
+    the interests, 40% hockey, 30% golf, 20% biking, 10% running",
     outputArgs = 
   )
 }
