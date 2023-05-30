@@ -6,9 +6,6 @@ library(shinyWidgets)
 library(boastUtils)
 library(ggplot2)
 
-
-
-
 # Load additional dependencies and setup functions
 # source("global.R")
 
@@ -19,7 +16,7 @@ ui <- list(
     skin = "blue",
     ### Create the app header ----
     dashboardHeader(
-      title = "Meet Robert Chappell", # You may use a shortened form of the title here
+      title = "Meet Robert Chappell",
       titleWidth = 250,
       tags$li(class = "dropdown", actionLink("info", icon("info"))),
       tags$li(
@@ -40,7 +37,7 @@ ui <- list(
         id = "pages",
         menuItem("Overview", tabName = "overview", icon = icon("gauge-high")),
         menuItem("About Me", tabName = "aboutMe", icon = icon("book")),
-        menuItem("Quiz", tabName = "explore", icon = icon("gamepad")),
+        menuItem("Quiz", tabName = "game", icon = icon("gamepad")),
         menuItem("References", tabName = "references", icon = icon("leanpub"))
       ),
       tags$div(
@@ -71,11 +68,13 @@ ui <- list(
             tags$img(
               src = "prof-head.JPG",
               width = 200,
-              alt = "Picture of Robert Chappell"
-            )
+              alt = "Headshot of Robert Chappell"
+            ),
+          tags$figcaption(
+            "Headshot of Robert Chappell"
+          ),
           ),
           br(),
-          ##### Go Button--location will depend on your goals
           div(
             style = "text-align: center;",
             bsButton(
@@ -86,7 +85,6 @@ ui <- list(
               style = "default"
             )
           ),
-          ##### Create two lines of space
           br(),
           br(),
           h2("Acknowledgements"),
@@ -109,17 +107,19 @@ ui <- list(
           h2("About Me"),
           p("Here are some interesting things about myself:"),
           tags$ul(
-            tags$li("I just finished my first year at Penn State. I am a Data Science
-                    Major"),
-            tags$li("I play both ice hockey and curling. I play curling for Penn State"),
+            tags$li("I just finished my first year at Penn State. I am a Data 
+                    Science Major"),
+            tags$li("I play both ice hockey and curling. I play curling for Penn
+                    State"),
             tags$li("At home I have a younger brother and my cats Prince and Sable"),
             tags$li("Some of my hobbies include cycling, golfing, and running")
           ),
-          p('Some more about me is that I am from Pittsburgh, I am a travel manager for the Penn State
-            curling club, and also a member of the sports analytics club. I played
-            hockey since I was 10, and have two cats at home. I enjoy all types of music except
-            for country music, and love to hang out with my friends. Below is a pie chart with my interests.
-            I am very excited to work in this program!'),
+          p('Some more about me is that I am from Pittsburgh, I am a travel manager
+            for the Penn State curling club, and also a member of the sports 
+            analytics club. I have played hockey since I was 10, and have two cats
+            at home. I enjoy all types of music except for country music, and 
+            love to hang out with my friends. Below is a pie chart with my 
+            interests.I am very excited to work in this program!'),
           fluidRow(
             column(
               width = 6,
@@ -128,7 +128,6 @@ ui <- list(
                 align = "center",
                 tags$img(
                   src = "cats-pic.jpg",
-                  height = 200,
                   width = 250,
                   alt = "Picture of me with cats"
                 ),
@@ -151,19 +150,16 @@ ui <- list(
             )
           ),
           plotOutput(
-            outputId = "intrestsPieChart"
+            outputId = "interestsPieChart"
           ),
         ),
-        #### Note: you must have at least one of the following pages. You might
-        #### have more than one type and/or more than one of the same type. This
-        #### will be up to you and the goals for your app.
         #### Set up an Quiz Page ----
         tabItem(
-          tabName = "explore",
+          tabName = "game",
           withMathJax(),
           h2("Quiz about me!"),
-          p("Answer the three questions about my life, if you need to review, check out
-            the About Me page."),
+          p("Answer the three questions about my life, if you need to review, 
+            check out the About Me page."),
           br(),
           fluidRow(
             column(
@@ -175,7 +171,7 @@ ui <- list(
                   type = "hidden",
                   tabPanel(
                     title = "First Question",
-                    value = paste0("Q1"),
+                    value = "Q1",
                     tags$figure(
                       align = "center",
                       tags$img(
@@ -189,7 +185,6 @@ ui <- list(
                     radioButtons(
                       inputId = "answerChoice1",
                       label = "Where is Robert from?",
-                      br(),
                       choices = c("Pittsburgh","Toronto","Chicago")
                     )
                   ),
@@ -209,7 +204,6 @@ ui <- list(
                     radioButtons(
                       inputId = "answerChoice2",
                       label = "What sport does Robert play at Penn State?",
-                      br(),
                       choices = c("Curling","Basketball","Rugby")
                     )
                   ),
@@ -229,8 +223,9 @@ ui <- list(
                     radioButtons(
                       inputId = "answerChoice3",
                       label = "What is the name of Robert's cats?",
-                      br(),
-                      choices = c("Prince and Sable","Fizz and Rocket","Garfield and Odie")
+                      choices = c("Prince and Sable",
+                                  "Fizz and Rocket", 
+                                  "Garfield and Odie")
                     )
                   )
                 )
@@ -277,10 +272,7 @@ ui <- list(
                 )
               )
             )
-            
-                
-              ),
-          
+          ),
         ),
         
         
@@ -291,34 +283,32 @@ ui <- list(
           h2("References"),
           p(
             class = 'hangingindent',
-            "Bailey E (2022). _shinyBS: Twitter Bootstrap Components for Shiny_. R package version
+            "Bailey E (2022). shinyBS: Twitter bootstrap components for shiny. R package version
             0.61.1, <https://CRAN.R-project.org/package=shinyBS>."),
           p(
             class = 'hangingindent',
-            "Carey R, Hatfield N (2023). _boastUtils: BOAST Utilities_. R package version 0.1.11.2,
+            "Carey R, Hatfield N (2023). boastUtils: BOAST utilities. R package version 0.1.11.2,
   <https://github.com/EducationShinyAppTeam/boastUtils>."
           ),
           p(class = 'hangingindent',
-            "Chang W, Borges Ribeiro B (2021). _shinydashboard: Create Dashboards with 'Shiny'_. R
+            "Chang W, Borges Ribeiro B (2021). shinydashboard: Create dashboards with 'Shiny'. R
   package version 0.7.2, <https://CRAN.R-project.org/package=shinydashboard>."),
           p(
             class = "hangingindent",
             "Chang W, Cheng J, Allaire J, Sievert C, Schloerke B, Xie Y, Allen J, McPherson J,
-            Dipert A, Borges B (2022). _shiny: Web Application Framework for R_. R package version
+            Dipert A, Borges B (2022). shiny: Web application framework for R. R package version
             1.7.4, <https://CRAN.R-project.org/package=shiny>."
           ),
           p(
             class = "hangingindent",
-              "Perrier V, Meyer F, Granjon D (2023). _shinyWidgets: Custom Inputs Widgets for Shiny_.
+              "Perrier V, Meyer F, Granjon D (2023). shinyWidgets: Custom inputs widgets for shiny.
               R package version 0.7.6, <https://CRAN.R-project.org/package=shinyWidgets>."
           ),
           p(
             class = 'hangingindent',
-              "Wickham H. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York,
+              "Wickham H. ggplot2: Elegant graphics for data analysis. Springer-Verlag New York,
               2016."
           ),
-          
-          
           br(),
           br(),
           boastUtils::copyrightInfo()
@@ -361,16 +351,15 @@ server <- function(input, output, session) {
   currentQuestion <- reactiveVal(1)
   
   ### Next Button ----
-  
   observeEvent(
     eventExpr = input$nextPage,
     handlerExpr = {
       if (currentQuestion() != 3) {
-        currentQuestion(currentQuestion()+1)
+        currentQuestion(currentQuestion() + 1)
         updateTabsetPanel(
           session = session,
           inputId = "quiz",
-          selected = paste0("Q",currentQuestion())
+          selected = paste0("Q", currentQuestion())
         )
       }
     }
@@ -382,11 +371,11 @@ server <- function(input, output, session) {
     eventExpr = input$prevPage,
     handlerExpr = {
       if (currentQuestion() != 1) {
-        currentQuestion(currentQuestion()-1)
+        currentQuestion(currentQuestion() - 1)
         updateTabsetPanel(
           session = session,
           inputId = "quiz",
-          selected = paste0("Q",currentQuestion())
+          selected = paste0("Q", currentQuestion())
         )
       }
     }
@@ -421,6 +410,7 @@ server <- function(input, output, session) {
       
       sendSweetAlert(
         session = session,
+        html = TRUE,
         type = if (currentScore() == 3) {
           "success"
         } else if (currentScore() < 3) {
@@ -428,9 +418,12 @@ server <- function(input, output, session) {
         },
         title = "Quiz Completed",
         text = paste0(
-          "Your Score: ", currentScore(), "/3",'\n',
+          "Your Score: ", currentScore(), "/3",
+          br(),
           if (length(wrongAnswers) > 0) {
-            paste("You got the following question(s) wrong:\n", paste(wrongAnswers, collapse = ", "))
+            paste("You got the following question(s) wrong:",
+                  br(),
+                  paste(wrongAnswers, collapse = " , "))
           } else {
             "Congratulations! You answered all questions correctly."
           }
@@ -445,11 +438,11 @@ server <- function(input, output, session) {
   
   ## Set up data viz ----
   
-  output$intrestsPieChart <- renderPlot(
+  output$interestsPieChart <- renderPlot(
     expr = {
-      intrestData <- data.frame(Activity = c("Golf", "Bike", "Hockey", "Running",
-                                             "Hockey", "Hockey", "Hockey", "Golf",
-                                             "Golf", "Bike"))
+      intrestData <- data.frame(
+        Activity = c("Golf", "Bike", "Hockey", "Running", "Hockey", "Hockey", 
+                     "Hockey", "Golf", "Golf", "Bike"))
       
       activity_counts <- table(intrestData$Activity)
       
@@ -459,17 +452,16 @@ server <- function(input, output, session) {
         geom_bar(width = 1, stat = "count") +
         coord_polar("y", start = 0) +
         labs(fill = "Activity") +
-        theme_void() +
-        scale_fill_manual( # If you use "fill" in aes
+        theme(
+          text = element_text(size = 18)
+        ) +
+        scale_fill_manual( 
           values = boastUtils::boastPalette
-        )  
+        ) +
+        theme_void()
     },
-    width = "auto",
-    height = "auto",
-    res = 72,
     alt = "A pie chart with percentages of interests, reflecting Roberts ranking of
     the interests, 40% hockey, 30% golf, 20% biking, 10% running",
-    outputArgs = 
   )
 }
 
